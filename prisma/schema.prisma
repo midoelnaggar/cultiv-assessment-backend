@@ -1,0 +1,32 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model contacts {
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_at DateTime  @db.Timestamp(6)
+  updated_at DateTime? @db.Timestamp(6)
+  name       String    @unique
+  number     String    @unique
+  imageUrl   String?
+  user_id    String    @db.Uuid
+  users      users     @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model users {
+  id         String     @id @unique @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name       String
+  password   String
+  email      String     @unique
+  number     String     @unique
+  last_login DateTime?  @db.Timestamp(6)
+  created_at DateTime   @db.Timestamp(6)
+  contacts   contacts[]
+}
