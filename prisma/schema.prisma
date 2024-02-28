@@ -16,6 +16,7 @@ model contacts {
   number     String    @unique
   imageUrl   String?
   user_id    String    @db.Uuid
+  email      String?
   users      users     @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
