@@ -38,6 +38,7 @@ npx prisma generate
 
 Run the server:
 npm run dev
+```
 Now the server is up and running.
 
 Integration with Frontend
